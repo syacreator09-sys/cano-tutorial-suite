@@ -1,0 +1,10 @@
+{
+  "name": "@cano/tutorial-suite",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Orchestrate CANO screen, presenter, VideoVox and composer skills.",
+  "engines": {"node":">=20"},
+  "scripts": {"test":"node --test","check":"node --check src/*.js bin/*.js","doctor":"node bin/cano-tutorial.js doctor"},
+  "bin": {"cano-tutorial":"bin/cano-tutorial.js"}
+}

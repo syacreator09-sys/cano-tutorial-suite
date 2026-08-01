@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "projectId": "image-generator-pilot",
+  "topic": "Cómo crear una imagen publicitaria con inteligencia artificial",
+  "format": "tutorial_short",
+  "audience": "emprendedores principiantes",
+  "screen": {"url":"https://example.com","objective":"mostrar un generador de imagen"},
+  "presenter": {"enabled":true,"profile":"cano"},
+  "vox": {"enabled":true,"purpose":"explicar la fórmula del prompt"},
+  "cta": "Comenta PROMPT"
+}
