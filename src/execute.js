@@ -27,12 +27,15 @@ export async function executeWorkflow(workflowFile,{mode='mock',configFile='conf
   const stages=workflow.stages ?? {};
   if(stages.screen?.enabled!==false) {
     requireApproval('liveBrowser',true);
-    await runStage('screen',()=>runNodeJson({cwd:config.skills.screen.path,bin:config.skills.screen.bin,args:['capture',resolveFrom(workflowDir,stages.screen.request),mode==='live'?'--live':'--mock']}));
+    const args=['capture',resolveFrom(workflowDir,stages.screen.request),mode==='live'?'--live':'--mock'];
+    await runStage('screen',()=>runNodeJson({cwd:config.skills.screen.path,bin:config.skills.screen.bin,args}));
   } else state.stages.screen={status:'SKIPPED'};
 
   if(stages.presenter?.enabled) {
     requireApproval('providerSpend',true); requireApproval('identityUse',true);
-    await runStage('presenter',()=>runNodeJson({cwd:config.skills.presenter.path,bin:config.skills.presenter.bin,args:['render',resolveFrom(workflowDir,stages.presenter.request),mode==='live'?'--live':'--mock']}));
+    const args=['render',resolveFrom(workflowDir,stages.presenter.request),mode==='live'?'--live':'--mock'];
+    if(mode==='live')args.push('--approve-spend');
+    await runStage('presenter',()=>runNodeJson({cwd:config.skills.presenter.path,bin:config.skills.presenter.bin,args}));
   } else state.stages.presenter={status:'SKIPPED'};
 
   if(stages.vox?.enabled) {
@@ -47,7 +50,9 @@ export async function executeWorkflow(workflowFile,{mode='mock',configFile='conf
 
   if(stages.composer?.enabled!==false) {
     if(mode==='live')requireApproval('localRender',true);
-    await runStage('composer',()=>runNodeJson({cwd:config.skills.composer.path,bin:config.skills.composer.bin,args:['render',resolveFrom(workflowDir,stages.composer.request),mode==='live'?'--live':'--mock']}));
+    const args=['render',resolveFrom(workflowDir,stages.composer.request),mode==='live'?'--live':'--mock'];
+    if(mode==='live')args.push('--approve-render');
+    await runStage('composer',()=>runNodeJson({cwd:config.skills.composer.path,bin:config.skills.composer.bin,args}));
   } else state.stages.composer={status:'SKIPPED'};
 
   state.status='AWAITING_REVIEW';state.completedAt=new Date().toISOString();state.approvals={publication:false};await saveState(stateFile,state);
