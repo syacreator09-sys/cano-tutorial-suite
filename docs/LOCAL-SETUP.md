@@ -2,24 +2,27 @@
 
 ## Repository layout
 
-Clone the five repositories as siblings under one directory. During construction the four new repositories use `feature/standalone-v1`; `cano-video-vox` remains on `main` until its adapter branch is created.
+Clone the five repositories as siblings under one directory. The four new repositories install from `main`; `cano-video-vox` remains independent until its scene adapter is added.
 
 ## macOS
 
 ```bash
-git clone --branch feature/standalone-v1 --single-branch https://github.com/syacreator09-sys/cano-tutorial-suite.git
+git clone https://github.com/syacreator09-sys/cano-tutorial-suite.git
 cd cano-tutorial-suite
+chmod +x scripts/clone-suite-macos.sh
 ./scripts/clone-suite-macos.sh
 ```
 
 ## Windows 11 / PowerShell 7
 
 ```powershell
-git clone --branch feature/standalone-v1 --single-branch https://github.com/syacreator09-sys/cano-tutorial-suite.git
+git clone https://github.com/syacreator09-sys/cano-tutorial-suite.git
 cd cano-tutorial-suite
 Set-ExecutionPolicy -Scope Process Bypass
 .\scripts\clone-suite-windows.ps1
 ```
+
+Both installers clone or update sibling repositories, install dependencies, run `npm run verify` locally and install Chromium for Playwright. No GitHub Actions workflows are used.
 
 ## Private HeyGen configuration
 
@@ -29,7 +32,7 @@ In `cano-heygen-presenter-skill`, copy:
 profiles/example.profile.json -> profiles/cano.local.json
 ```
 
-Set these only in the local shell or OS credential loader:
+Set these only in the local shell, Keychain/Credential Manager loader or an ignored local environment file:
 
 ```text
 HEYGEN_API_KEY
@@ -62,4 +65,4 @@ cd ../cano-tutorial-suite
 node bin/cano-tutorial.js run examples/image-generator-short.request.json --mock
 ```
 
-Live browser capture and HeyGen generation remain separate approval steps.
+Live browser capture, identity use, provider spending and publication remain separate approval steps.
