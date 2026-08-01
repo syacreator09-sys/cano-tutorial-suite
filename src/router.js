@@ -1,0 +1,1 @@
+export function routeRequest(request){const short=request.format.includes('short')||request.format==='tutorial_short';return{durationTarget:short?45:480,canvas:short?'9:16':'16:9',useScreen:true,usePresenter:request.presenter?.enabled!==false,useVox:request.vox?.enabled!==false,recipe:short?'avatar-screen-short':'screen-tutorial-long'};}

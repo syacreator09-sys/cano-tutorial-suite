@@ -1,0 +1,6 @@
+{
+  "id": "avatar-screen-short",
+  "stages": ["screen","presenter","vox","compose","review"],
+  "canvas": "9:16",
+  "durationTarget": 45
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@cano/tutorial-suite",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Orchestrate CANO screen, presenter, VideoVox and composer skills.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check-syntax.mjs",
+    "audit:release": "node scripts/audit-release.mjs",
+    "verify": "npm test && npm run check && npm run audit:release",
+    "doctor": "node bin/cano-tutorial.js doctor"
+  },
+  "bin": {
+    "cano-tutorial": "bin/cano-tutorial.js"
+  }
+}

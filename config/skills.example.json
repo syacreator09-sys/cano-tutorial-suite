@@ -1,0 +1,6 @@
+{
+  "screen": {"path":"../cano-screen-tutorial-skill"},
+  "presenter": {"path":"../cano-heygen-presenter-skill"},
+  "vox": {"path":"../cano-video-vox"},
+  "composer": {"path":"../cano-hybrid-composer-skill"}
+}
