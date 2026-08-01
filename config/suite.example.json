@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "runtimeDir": ".runtime",
+  "skills": {
+    "screen": {"path": "../cano-screen-tutorial-skill", "bin": "bin/cano-screen.js"},
+    "presenter": {"path": "../cano-heygen-presenter-skill", "bin": "bin/cano-heygen.js"},
+    "vox": {"path": "../cano-video-vox", "bin": "scripts/render-job.mjs"},
+    "composer": {"path": "../cano-hybrid-composer-skill", "bin": "bin/cano-compose.js"}
+  },
+  "defaults": {"mode": "mock", "format": "tutorial_short"},
+  "approvals": {
+    "liveBrowser": false,
+    "providerSpend": false,
+    "identityUse": false,
+    "localRender": false,
+    "publication": false
+  }
+}
