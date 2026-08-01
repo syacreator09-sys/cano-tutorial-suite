@@ -1,14 +1,19 @@
-# Functional Options
+# Comandos y opciones
 
-## Commands
+## CLI
 
-| Command | Purpose |
-|---|---|
-| `cano-tutorial doctor` | Resolve local sibling-skill paths and platform information |
-| `cano-tutorial plan request.json` | Route short/long format and create approval gates |
-| `cano-tutorial run request.json --mock` | Create resumable mock job state without live providers |
+| Comando | Función | Red/proveedor |
+|---|---|---|
+| `cano-tutorial init` | Asistente de configuración local | No |
+| `cano-tutorial doctor` | Diagnóstico de repositorios y dependencias | Solo diagnósticos locales |
+| `cano-tutorial plan request.json` | Valida y enruta el formato | No |
+| `cano-tutorial prepare request.json` | Crea workspace y requests editables | No |
+| `cano-tutorial run request.json --mock` | Crea un job mock resumible | No |
+| `cano-tutorial execute workflow.json --mock` | Ejecuta skills en modo seguro | No proveedores live |
+| `cano-tutorial execute workflow.json --live` | Ejecuta etapas autorizadas | Sí, según workflow |
+| `cano-tutorial status PROJECT_ID` | Lee el estado de un job | No |
 
-## Supported request formats
+## Formatos admitidos
 
 - `tutorial_short`
 - `tutorial_extended`
@@ -17,28 +22,55 @@
 - `avatar_visual_short`
 - `avatar_vox_short`
 
-## Skill registry
+## Routing
 
-The suite resolves sibling repositories by environment variables or adjacent folders:
+Los formatos cortos usan canvas `9:16` y un objetivo aproximado de 45 segundos. Los largos usan `16:9` y un objetivo inicial de ocho minutos. Las duraciones finales permanecen editables.
+
+## Etapas
+
+- `screen`
+- `presenter`
+- `vox`
+- `composer`
+- `review`
+
+Las etapas no requeridas se marcan `SKIPPED`.
+
+## Configuración de rutas
+
+Se recomienda `config/suite.local.json`. Cada skill conserva una ruta y un ejecutable independiente.
+
+## Modos
+
+### Mock
+
+Valida contratos y crea manifiestos sin abrir páginas, gastar créditos o renderizar medios finales.
+
+### Live
+
+Ejecuta las etapas reales y exige aprobaciones específicas. No habilita publicación.
+
+## Estado de trabajos
+
+Los estados se escriben después de cada etapa en:
 
 ```text
-CANO_SCREEN_SKILL_PATH
-CANO_HEYGEN_SKILL_PATH
-CANO_VOX_SKILL_PATH
-CANO_COMPOSER_SKILL_PATH
+.runtime/jobs/PROJECT_ID/job-state.json
 ```
 
-## Approval gates
+Estados frecuentes:
 
-- live browser access
-- provider spending
-- identity use
-- publication
+- `RUNNING`
+- `FAILED`
+- `AWAITING_REVIEW`
+- `SKIPPED`
+- `MOCKED`
+- `COMPLETED`
 
-All begin disabled.
+## Límites v0.2
 
-## Current limits
-
-- Version 0.1 validates, routes and creates mock job state.
-- Live cross-repository execution, resume logic, VideoVox scene adapter and real media rendering are the next milestones.
-- iOS is a review/control surface; rendering runs on macOS, Windows or approved remote infrastructure.
+- `prepare` genera plantillas, no descubre automáticamente selectores específicos de cada web.
+- Los assets de composición deben existir antes del render live.
+- VideoVox requiere un `jobSlug` preparado.
+- HeyGen live depende de créditos, disponibilidad y términos actuales de la cuenta.
+- iOS funciona como superficie de control y revisión; la ejecución ocurre en macOS, Windows o infraestructura remota aprobada.

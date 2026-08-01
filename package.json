@@ -1,21 +1,24 @@
 {
   "name": "@cano/tutorial-suite",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "type": "module",
-  "description": "Orchestrate CANO screen, presenter, VideoVox and composer skills.",
+  "description": "Clone-ready orchestration for screen capture, HeyGen presenters, VideoVox and hybrid tutorial composition.",
   "license": "MIT",
-  "engines": {
-    "node": ">=20"
-  },
+  "engines": {"node":">=20"},
+  "keywords": ["tutorial-automation","playwright","heygen","videovox","ffmpeg","claude-code","codex"],
+  "repository": {"type":"git","url":"https://github.com/syacreator09-sys/cano-tutorial-suite.git"},
   "scripts": {
-    "test": "node --test",
-    "check": "node scripts/check-syntax.mjs",
-    "audit:release": "node scripts/audit-release.mjs",
-    "verify": "npm test && npm run check && npm run audit:release",
-    "doctor": "node bin/cano-tutorial.js doctor"
+    "test":"node --test",
+    "check":"node scripts/check-syntax.mjs",
+    "audit:release":"node scripts/audit-release.mjs",
+    "verify":"npm test && npm run check && npm run audit:release",
+    "doctor":"node bin/cano-tutorial.js doctor",
+    "init":"node bin/cano-tutorial.js init",
+    "prepare":"node bin/cano-tutorial.js prepare examples/image-generator-short.request.json",
+    "smoke":"node bin/cano-tutorial.js run examples/image-generator-short.request.json --mock",
+    "prepublishOnly":"npm run verify"
   },
-  "bin": {
-    "cano-tutorial": "bin/cano-tutorial.js"
-  }
+  "bin":{"cano-tutorial":"bin/cano-tutorial.js"},
+  "files":["bin","src","config","schemas","scripts","docs","examples","recipes","SKILL.md","AGENTS.md","CLAUDE.md","SECURITY.md","PRIVACY.md","USAGE_POLICY.md","BRAND_AND_IDENTITY.md","THIRD_PARTY_NOTICES.md","LICENSE","README.md"]
 }
