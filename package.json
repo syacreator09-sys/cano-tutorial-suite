@@ -3,10 +3,10 @@
   "version": "0.2.0",
   "private": false,
   "type": "module",
-  "description": "Clone-ready orchestrator for CANO Screen, HeyGen Presenter, VideoVox and Hybrid Composer.",
+  "description": "Clone-ready orchestration for screen capture, HeyGen presenters, VideoVox and hybrid tutorial composition.",
   "license": "MIT",
   "engines": {"node":">=20"},
-  "keywords": ["tutorial-automation", "playwright", "heygen", "ffmpeg", "claude-code", "codex"],
+  "keywords": ["tutorial-automation","playwright","heygen","videovox","ffmpeg","claude-code","codex"],
   "repository": {"type":"git","url":"https://github.com/syacreator09-sys/cano-tutorial-suite.git"},
   "scripts": {
     "test":"node --test",
@@ -15,6 +15,7 @@
     "verify":"npm test && npm run check && npm run audit:release",
     "doctor":"node bin/cano-tutorial.js doctor",
     "init":"node bin/cano-tutorial.js init",
+    "prepare":"node bin/cano-tutorial.js prepare examples/image-generator-short.request.json",
     "smoke":"node bin/cano-tutorial.js run examples/image-generator-short.request.json --mock",
     "prepublishOnly":"npm run verify"
   },
