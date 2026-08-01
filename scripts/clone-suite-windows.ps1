@@ -1,6 +1,6 @@
 param(
   [string]$Base = "$HOME\AI\cano-tutorials",
-  [string]$Ref = $(if ($env:CANO_TUTORIAL_REF) { $env:CANO_TUTORIAL_REF } else { "feature/standalone-v1" })
+  [string]$Ref = $(if ($env:CANO_TUTORIAL_REF) { $env:CANO_TUTORIAL_REF } else { "main" })
 )
 $ErrorActionPreference = "Stop"
 New-Item -ItemType Directory -Force -Path $Base | Out-Null
@@ -26,8 +26,7 @@ if (-not (Test-Path "cano-video-vox\.git")) {
 foreach ($repo in $skills) {
   Push-Location $repo
   npm install
-  npm test
-  npm run check
+  npm run verify
   Pop-Location
 }
 Push-Location cano-screen-tutorial-skill
@@ -36,4 +35,4 @@ Pop-Location
 Push-Location cano-tutorial-suite
 node .\bin\cano-tutorial.js doctor
 Pop-Location
-Write-Host "CANO Tutorial Suite installed at $Base"
+Write-Host "CANO Tutorial Suite installed and locally verified at $Base"
