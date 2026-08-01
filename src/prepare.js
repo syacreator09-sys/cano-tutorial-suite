@@ -10,10 +10,12 @@ export async function prepareTutorialWorkspace(request,{configFile='config/suite
   const {config}=await loadSuiteConfig(configFile);
   const root=path.resolve(config.runtimeDir,'jobs',request.projectId);
   const requestDir=path.join(root,'requests');
+  const assetsDir=path.join(root,'assets');
+  await mkdir(assetsDir,{recursive:true});
   const screenRequest={
     version:'1.0',projectId:`${request.projectId}-screen`,url:request.screen.url,
     objective:request.screen.objective ?? request.topic,
-    viewport:plan.route.canvas==='9:16'?{width:1440,height:900}:{width:1440,height:900},
+    viewport:{width:1440,height:900},
     actions:[
       {id:'open-tool',type:'goto',url:request.screen.url},
       {id:'wait-page',type:'waitFor',selector:'body'},
@@ -33,14 +35,15 @@ export async function prepareTutorialWorkspace(request,{configFile='config/suite
   const compositionRequest={
     version:'1.0',projectId:`${request.projectId}-composition`,canvas:plan.route.canvas,fps:30,
     scenes:[
-      ...(plan.route.usePresenter?[{id:'avatar-hook',type:'avatar',asset:'assets/avatar-hook.mp4',duration:4}]:[]),
-      {id:'browser-demo',type:'browser',asset:'assets/screen.webm',duration:Math.max(10,plan.route.durationTarget-12),fit:'contain'},
-      ...(plan.route.useVox?[{id:'vox-explainer',type:'videovox',asset:'assets/vox.mp4',duration:6}]:[]),
-      ...(plan.route.usePresenter?[{id:'avatar-cta',type:'avatar',asset:'assets/avatar-cta.mp4',duration:4}]:[])
+      ...(plan.route.usePresenter?[{id:'avatar-hook',type:'avatar',asset:'../assets/avatar-hook.mp4',duration:4}]:[]),
+      {id:'browser-demo',type:'browser',asset:'../assets/screen.webm',duration:Math.max(10,plan.route.durationTarget-12),fit:'contain'},
+      ...(plan.route.useVox?[{id:'vox-explainer',type:'videovox',asset:'../assets/vox.mp4',duration:6}]:[]),
+      ...(plan.route.usePresenter?[{id:'avatar-cta',type:'avatar',asset:'../assets/avatar-cta.mp4',duration:4}]:[])
     ]
   };
   const workflow={
     version:'1.0',projectId:request.projectId,
+    assetsDir,
     stages:{
       screen:{enabled:true,request:path.join(requestDir,'screen-request.json')},
       presenter:{enabled:plan.route.usePresenter,request:path.join(requestDir,'presenter-request.json')},
@@ -53,5 +56,9 @@ export async function prepareTutorialWorkspace(request,{configFile='config/suite
   await writeJson(path.join(requestDir,'presenter-request.json'),presenterRequest);
   await writeJson(path.join(requestDir,'composition-request.json'),compositionRequest);
   await writeJson(path.join(root,'workflow.json'),workflow);
-  return {status:'PREPARED',projectId:request.projectId,root,workflow:path.join(root,'workflow.json'),files:{screen:path.join(requestDir,'screen-request.json'),presenter:path.join(requestDir,'presenter-request.json'),composition:path.join(requestDir,'composition-request.json')}};
+  await writeJson(path.join(assetsDir,'README.json'),{
+    purpose:'Place or copy approved stage assets here before composer live rendering.',
+    expected:['screen.webm',...(plan.route.usePresenter?['avatar-hook.mp4','avatar-cta.mp4']:[]),...(plan.route.useVox?['vox.mp4']:[])]
+  });
+  return {status:'PREPARED',projectId:request.projectId,root,assetsDir,workflow:path.join(root,'workflow.json'),files:{screen:path.join(requestDir,'screen-request.json'),presenter:path.join(requestDir,'presenter-request.json'),composition:path.join(requestDir,'composition-request.json')}};
 }
