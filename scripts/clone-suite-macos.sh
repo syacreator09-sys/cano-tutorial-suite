@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 base="${1:-$HOME/AI/cano-tutorials}"
-ref="${CANO_TUTORIAL_REF:-feature/standalone-v1}"
+ref="${CANO_TUTORIAL_REF:-main}"
 mkdir -p "$base"
 cd "$base"
 
@@ -23,9 +23,9 @@ else
 fi
 
 for repo in "${skills[@]}"; do
-  (cd "$repo" && npm install && npm test && npm run check)
+  (cd "$repo" && npm install && npm run verify)
 done
 (cd cano-screen-tutorial-skill && npx playwright install chromium)
 (cd cano-tutorial-suite && node bin/cano-tutorial.js doctor)
 
-echo "CANO Tutorial Suite installed at $base"
+echo "CANO Tutorial Suite installed and locally verified at $base"
