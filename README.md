@@ -20,6 +20,8 @@ Según el request puede preparar contenido para:
 - Reels y TikTok verticales.
 - Tutoriales de pantalla con avatar.
 - Explicaciones híbridas con VideoVox.
+- Recomendaciones de repositorios y herramientas.
+- Pruebas reales, comparaciones y casos de uso digitales.
 - Variantes cortas derivadas de un proyecto maestro.
 
 Los resultados y datos privados se guardan bajo `.runtime/`, fuera de Git.
@@ -132,6 +134,8 @@ Ambos agentes usan los mismos contratos y CLI:
 ## Documentación
 
 - [Empieza aquí](docs/START-HERE.md)
+- [Formatos editoriales de CANO Digital](docs/CONTENT-FORMATS.md)
+- [Análisis de video con /watch](docs/VIDEO-ANALYSIS-WATCH.md)
 - [Configuración](docs/CONFIGURATION.md)
 - [Instalación local](docs/LOCAL-SETUP.md)
 - [Comandos y opciones](docs/OPTIONS.md)
